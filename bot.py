@@ -2,7 +2,17 @@ import os
 
 import telebot
 
+from utils import generate_answer
+
 bot = telebot.TeleBot(os.environ["API_KEY"])
+
+
+@bot.message_handler(commands=["start"])
+def send_welcome(message):
+    bot.send_message(
+        message.chat.id,
+        "Hello! I'm a question answering bot powered by OpenAI and built by Sethu Sai M. Send me a question and I'll do my best to answer it!",
+    )
 
 
 @bot.message_handler(commands=["start"])
@@ -29,6 +39,13 @@ def info(message):
 @bot.message_handler(commands=["status"])
 def status(message):
     bot.reply_to(message, "I am up and running.")
+
+
+@bot.message_handler(func=lambda message: True)
+def ask_question(message):
+    ans = generate_answer(message.text)
+
+    bot.reply_to(message, ans)
 
 
 print("Hey, I am up....")
