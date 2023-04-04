@@ -6,7 +6,7 @@ from langchain.memory import ConversationBufferMemory
 
 bot = telebot.TeleBot(os.environ["API_KEY"])
 
-template = """You are a chatbot having a conversation with a human.
+template = """You are a chatbot having a taking a conversation with a human.
 
 {chat_history}
 Human: {human_input}
@@ -19,11 +19,12 @@ prompt = PromptTemplate(
 memory = ConversationBufferMemory(memory_key="chat_history")
 
 llm_chain = LLMChain(
-    llm=OpenAI(),
+    llm=OpenAI(model_name="gpt-3.5-turbo", temperature=0),
     prompt=prompt,
     verbose=True,
     memory=memory,
 )
+
 
 @bot.message_handler(commands=["start"])
 def send_welcome(message):
