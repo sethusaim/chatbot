@@ -1,11 +1,29 @@
 import os
 
 import telebot
-
-from utils import generate_answer
+from langchain import LLMChain, OpenAI, PromptTemplate
+from langchain.memory import ConversationBufferMemory
 
 bot = telebot.TeleBot(os.environ["API_KEY"])
 
+template = """You are a chatbot having a conversation with a human.
+
+{chat_history}
+Human: {human_input}
+Chatbot:"""
+
+prompt = PromptTemplate(
+    input_variables=["chat_history", "human_input"], template=template
+)
+
+memory = ConversationBufferMemory(memory_key="chat_history")
+
+llm_chain = LLMChain(
+    llm=OpenAI(),
+    prompt=prompt,
+    verbose=True,
+    memory=memory,
+)
 
 @bot.message_handler(commands=["start"])
 def send_welcome(message):
@@ -13,11 +31,6 @@ def send_welcome(message):
         message.chat.id,
         "Hello! I'm a question answering bot powered by OpenAI and built by Sethu Sai M. Send me a question and I'll do my best to answer it!",
     )
-
-
-@bot.message_handler(commands=["start"])
-def start(message):
-    bot.reply_to(message, "Hello, I am a Telegram bot. Use /help to see what I can do.")
 
 
 @bot.message_handler(commands=["help"])
@@ -42,10 +55,12 @@ def status(message):
 
 
 @bot.message_handler(func=lambda message: True)
-def ask_question(message):
-    ans = generate_answer(message.text)
+def handle_message(message):
+    user_message = message.text
 
-    bot.reply_to(message, ans)
+    bot_response = llm_chain.predict(human_input=user_message)
+
+    bot.send_message(message.chat.id, bot_response)
 
 
 print("Hey, I am up....")
