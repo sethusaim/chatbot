@@ -1,0 +1,7 @@
+version: '3'
+services:
+  application:
+    image: 566373416292.dkr.ecr.us-east-1.amazonaws.com/neurobot:latest
+    environment:
+      - API_KEY
+      - OPENAI_API_KEY

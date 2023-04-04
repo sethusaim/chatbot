@@ -1,3 +1,5 @@
 venv/
 LICENSE
 README.md
+__pycache__/
+.github/
