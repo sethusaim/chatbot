@@ -1,5 +1,6 @@
 import sys
 
+from src.components.discord_bot import client, discord_token
 from src.components.telegram_bot import bot
 from src.exception import CustomException
 
@@ -17,10 +18,11 @@ def run_telegram_bot():
 
 def run_discord_bot():
     """
-    This is a skeleton function for running a Discord bot with error handling.
+    This function runs a Discord bot using a provided token and raises a custom exception if an error
+    occurs.
     """
     try:
-        pass
+        client.run(discord_token)
 
     except Exception as e:
         raise CustomException(e, sys)
