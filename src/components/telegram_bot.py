@@ -3,7 +3,7 @@ import os
 from langchain import LLMChain
 from telebot import TeleBot
 
-from src.ml.chain import get_llm_chain
+from src.api.chain import get_llm_chain
 
 bot: TeleBot = TeleBot(os.environ["API_KEY"])
 
