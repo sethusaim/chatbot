@@ -1,5 +1,7 @@
-venv/
-LICENSE
-README.md
 __pycache__/
 .github/
+venv/
+.gitignore
+demo.py
+LICENSE
+README.md
