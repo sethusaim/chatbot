@@ -6,7 +6,7 @@ import yaml
 from src.exception import CustomException
 
 
-def read_bot_config(bot_type: str) -> Dict:
+def read_bot_config() -> Dict:
     """
     This function reads a YAML configuration file for a specified bot type and returns the corresponding
     dictionary.
@@ -24,7 +24,7 @@ def read_bot_config(bot_type: str) -> Dict:
         with open("config/bot_config.yaml", "r") as f:
             dic = yaml.safe_load(f)
 
-        return dic[bot_type]
+        return dic
 
     except Exception as e:
         raise CustomException(e, sys)

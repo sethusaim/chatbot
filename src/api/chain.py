@@ -1,8 +1,10 @@
 import sys
 from typing import Dict
 
-from langchain import LLMChain, OpenAI, PromptTemplate
+from langchain.chains.llm import LLMChain
+from langchain.chat_models.openai import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
+from langchain.prompts.prompt import PromptTemplate
 
 from src.exception import CustomException
 from src.logger import logging
@@ -21,7 +23,7 @@ prompt: PromptTemplate = PromptTemplate(
 memory: ConversationBufferMemory = ConversationBufferMemory(memory_key="chat_history")
 
 
-def get_llm_chain(bot_type: str) -> LLMChain:
+def get_llm_chain() -> LLMChain:
     """
     This function returns an instance of the LLMChain class with specified parameters, using the OpenAI
     API and a bot configuration file.
@@ -36,13 +38,10 @@ def get_llm_chain(bot_type: str) -> LLMChain:
     logging.info("Entered get_llm_chain method of chain.py file")
 
     try:
-        bot_config: Dict = read_bot_config(bot_type=bot_type)
+        bot_config: Dict = read_bot_config()
 
-        llm_chain: LLMChain = LLMChain(
-            llm=OpenAI(**bot_config),
-            prompt=prompt,
-            verbose=True,
-            memory=memory,
+        llm_chain = LLMChain(
+            llm=ChatOpenAI(**bot_config), prompt=prompt, verbose=True, memory=memory
         )
 
         logging.info(f"LLM chain prompt template is {prompt.template}")
