@@ -1,11 +1,11 @@
 import os
 
-from langchain import LLMChain
+from langchain.chains.llm import LLMChain
 from telebot import TeleBot
 
 from src.api.chain import get_llm_chain
 
-bot: TeleBot = TeleBot(os.environ["API_KEY"])
+bot = TeleBot(os.environ["API_KEY"])
 
 llm_chain: LLMChain = get_llm_chain(bot_type="telegram")
 
@@ -79,7 +79,7 @@ def handle_message(message):
       message: The message object contains information about the incoming message, such as the text,
     sender, and chat ID.
     """
-    user_message = message.text
+    user_message: str = message.text
 
     bot_response = llm_chain.predict(human_input=user_message)
 

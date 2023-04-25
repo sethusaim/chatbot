@@ -16,11 +16,11 @@ template: str = """You are a chatbot having a taking a conversation with a human
 Human: {human_input}
 Chatbot:"""
 
-prompt: PromptTemplate = PromptTemplate(
+prompt = PromptTemplate(
     input_variables=["chat_history", "human_input"], template=template
 )
 
-memory: ConversationBufferMemory = ConversationBufferMemory(memory_key="chat_history")
+memory = ConversationBufferMemory(memory_key="chat_history")
 
 
 def get_llm_chain() -> LLMChain:
