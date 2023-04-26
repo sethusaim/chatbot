@@ -5,9 +5,6 @@ from langchain.chains.llm import LLMChain
 from langchain.chat_models.openai import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts.prompt import PromptTemplate
-from langchain.embeddings.openai import OpenAIEmbeddings
-from langchain.memory import ConversationSummaryBufferMemory, ConversationBufferMemory
-from langchain.vectorstores.chroma import Chroma
 
 from src.exception import CustomException
 from src.logger import logging
