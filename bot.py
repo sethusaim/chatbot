@@ -1,18 +1,16 @@
 import os
 
+from langchain.callbacks import get_openai_callback
 from langchain.chains.llm import LLMChain
 from telebot import TeleBot
 
-from src.api.chain import LLMChain
+from src.api.chain import get_llm_chain
 from src.logger import logging
-
-from langchain.callbacks import get_openai_callback
 
 bot = TeleBot(os.environ["API_KEY"])
 
-chain = LLMChain()
 
-llm_chain: LLMChain = chain.get_llm_chain()
+llm_chain: LLMChain = get_llm_chain()
 
 
 @bot.message_handler(commands=["start"])
